@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>AnimeVerse - عالم الأنمي</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #cc0000;
+      --primary-dark: #8b0000;
+      --primary-light: #ff1a1a;
+      --bg-primary: #0a0a0a;
+      --bg-secondary: #111111;
+      --bg-card: #1a1a1a;
+      --bg-card-hover: #222222;
+      --text-primary: #ffffff;
+      --text-secondary: #aaaaaa;
+      --text-muted: #666666;
+      --shadow-red: rgba(204, 0, 0, 0.3);
+      --shadow-glow: 0 0 30px rgba(204, 0, 0, 0.15);
+      --radius: 12px;
+      --radius-lg: 20px;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      overflow-x: hidden;
+      padding-bottom: 80px;
+      min-height: 100vh;
+    }
+
+    body::-webkit-scrollbar {
+      width: 6px;
+    }
+    body::-webkit-scrollbar-track {
+      background: var(--bg-primary);
+    }
+    body::-webkit-scrollbar-thumb {
+      background: var(--primary);
+      border-radius: 3px;
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: linear-gradient(180deg, rgba(10,10,10,0.98) 60%, transparent);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(204,0,0,0.1);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: #fff;
+      box-shadow: 0 4px 15px var(--shadow-red);
+      animation: pulse-glow 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 4px 15px var(--shadow-red); }
+      50% { box-shadow: 0 4px 30px var(--shadow-red), 0 0 60px rgba(204,0,0,0.1); }
+    }
+
+    .logo-text {
+      font-size: 22px;
+      font-weight: 900;
+      background: linear-gradient(135deg, #fff 30%, var(--primary-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .logo-text span {
+      color: var(--primary);
+      -webkit-text-fill-color: var(--primary);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .header-actions button {
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 20px;
+      cursor: pointer;
+      transition: all 0.3s;
+      position: relative;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .header-actions button:hover {
+      color: var(--primary);
+      background: rgba(204,0,0,0.1);
+    }
+
+    .notif-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--primary);
+      border-radius: 50%;
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      animation: pulse-dot 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.4); opacity: 0.6; }
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: var(--bg-secondary);
+      border-radius: 25px;
+      padding: 0 16px;
+      border: 1px solid rgba(255,255,255,0.06);
+      transition: all 0.3s;
+      flex: 1;
+      max-width: 280px;
+    }
+
+    .search-box:focus-within {
+      border-color: var(--primary);
+      box-shadow: 0 0 20px var(--shadow-red);
+    }
+
+    .search-box input {
+      background: none;
+      border: none;
+      outline: none;
+      color: var(--text-primary);
+      padding: 10px 10px;
+      font-size: 14px;
+      width: 100%;
+      font-family: 'Cairo', sans-serif;
+    }
+
+    .search-box input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .search-box i {
+      color: var(--text-muted);
+      font-size: 16px;
+    }
+
+    /* ===== HERO SLIDER ===== */
+    .hero {
+      position: relative;
+      height: 420px;
+      overflow: hidden;
+      margin: 0 0 30px;
+    }
+
+    .hero-slider {
+      display: flex;
+      height: 100%;
+      transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .hero-slide {
+      min-width: 100%;
+      height: 100%;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      padding: 40px 30px;
+    }
+
+    .hero-slide::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(10,10,10,0.95) 0%, rgba(10,10,10,0.3) 50%, transparent 80%),
+                  linear-gradient(0deg, rgba(10,10,10,1) 0%, transparent 50%);
+      z-index: 1;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 500px;
+      animation: fadeInUp 0.8s ease;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--primary);
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+      box-shadow: 0 4px 15px var(--shadow-red);
+    }
+
+    .hero-badge i {
+      font-size: 10px;
+    }
+
+    .hero-title {
+      font-size: 32px;
+      font-weight: 900;
+      line-height: 1.2;
+      margin-bottom: 10px;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.5);
+    }
+
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 14px;
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .hero-meta span {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .hero-meta i {
+      color: var(--primary);
+    }
+
+    .hero-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 18px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn {
+      padding: 10px 28px;
+      border-radius: 25px;
+      border: none;
+      font-family: 'Cairo', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: #fff;
+      box-shadow: 0 4px 20px var(--shadow-red);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px var(--shadow-red);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: #fff;
+      border: 2px solid rgba(255,255,255,0.2);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--primary);
+      background: rgba(204,0,0,0.1);
+    }
+
+    .hero-dots {
+      position: absolute;
+      bottom: 20px;
+      right: 30px;
+      z-index: 5;
+      display: flex;
+      gap: 8px;
+    }
+
+    .hero-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .hero-dot.active {
+      background: var(--primary);
+      box-shadow: 0 0 15px var(--shadow-red);
+      width: 30px;
+      border-radius: 5px;
+    }
+
+    /* ===== SECTION ===== */
+    .section {
+      padding: 0 20px;
+      margin-bottom: 30px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-size: 20px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title .accent {
+      width: 4px;
+      height: 22px;
+      background: var(--primary);
+      border-radius: 2px;
+      display: inline-block;
+      box-shadow: 0 0 15px var(--shadow-red);
+    }
+
+    .section-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .section-link:hover {
+      color: var(--primary);
+    }
+
+    /* ===== HORIZONTAL SCROLL ===== */
+    .scroll-wrapper {
+      position: relative;
+    }
+
+    .scroll-area {
+      display: flex;
+      gap: 14px;
+      overflow-x: auto;
+      padding: 6px 0 14px;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+
+    .scroll-area::-webkit-scrollbar {
+      display: none;
+    }
+
+    .scroll-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(10,10,10,0.85);
+      border: 1px solid rgba(204,0,0,0.2);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 5;
+      transition: all 0.3s;
+      backdrop-filter: blur(10px);
+    }
+
+    .scroll-arrow:hover {
+      background: var(--primary);
+      border-color: var(--primary);
+    }
+
+    .scroll-arrow.left { left: -10px; }
+    .scroll-arrow.right { right: -10px; }
+
+    /* ===== ANIME CARD ===== */
+    .anime-card {
+      min-width: 150px;
+      max-width: 150px;
+      scroll-snap-align: start;
+      cursor: pointer;
+      transition: transform 0.3s;
+      position: relative;
+    }
+
+    .anime-card:hover {
+      transform: translateY(-6px);
+    }
+
+    .anime-card-poster {
+      width: 100%;
+      aspect-ratio: 3/4;
+      border-radius: var(--radius);
+      overflow: hidden;
+      position: relative;
+      background: var(--bg-card);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+    }
+
+    .anime-card-poster img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s;
+    }
+
+    .anime-card:hover .anime-card-poster img {
+      transform: scale(1.08);
+    }
+
+    .anime-card-poster .overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, rgba(10,10,10,0.8) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity 0.3s;
+      display: flex;
+      align-items: flex-end;
+      padding: 12px;
+    }
+
+    .anime-card:hover .overlay {
+      opacity: 1;
+    }
+
+    .anime-card-poster .episode-badge {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: var(--primary);
+      padding: 2px 10px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 700;
+      box-shadow: 0 2px 10px var(--shadow-red);
+    }
+
+    .anime-card-poster .rating {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(5px);
+      padding: 2px 8px;
+      border-radius: 8px;
+      font-size: 11px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      color: #ffd700;
+    }
+
+    .anime-card-title {
+      margin-top: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .anime-card-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* ===== LARGE CARD ===== */
+    .anime-card.large {
+      min-width: 200px;
+      max-width: 200px;
+    }
+
+    /* ===== CATEGORY CHIPS ===== */
+    .categories-scroll {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 4px 0 12px;
+      scrollbar-width: none;
+    }
+
+    .categories-scroll::-webkit-scrollbar { display: none; }
+
+    .category-chip {
+      flex-shrink: 0;
+      padding: 8px 20px;
+      border-radius: 25px;
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,0.06);
+      color: var(--text-secondary);
+      font-family: 'Cairo', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      white-space: nowrap;
+    }
+
+    .category-chip:hover,
+    .category-chip.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+      box-shadow: 0 4px 20px var(--shadow-red);
+    }
+
+    /* ===== CONTINUE WATCHING ===== */
+    .continue-card {
+      min-width: 280px;
+      max-width: 280px;
+      scroll-snap-align: start;
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.3s;
+      border: 1px solid rgba(255,255,255,0.04);
+    }
+
+    .continue-card:hover {
+      background: var(--bg-card-hover);
+      transform: translateY(-4px);
+    }
+
+    .continue-card .thumb {
+      width: 100%;
+      height: 130px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .continue-card .body {
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .continue-card .body .info {
+      flex: 1;
+    }
+
+    .continue-card .body .info h4 {
+      font-size: 14px;
+      margin-bottom: 2px;
+    }
+
+    .continue-card .body .info p {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 4px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 2px;
+      margin-top: 6px;
+      overflow: hidden;
+    }
+
+    .progress-bar .fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--primary-light));
+      border-radius: 2px;
+      transition: width 0.5s;
+    }
+
+    .continue-card .play-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--primary);
+      border: none;
+      color: #fff;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      box-shadow: 0 4px 15px var(--shadow-red);
+      transition: all 0.3s;
+    }
+
+    .continue-card .play-btn:hover {
+      transform: scale(1.1);
+    }
+
+    /* ===== BOTTOM NAV ===== */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 200;
+      background: rgba(10,10,10,0.95);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      border-top: 1px solid rgba(204,0,0,0.15);
+      display: flex;
+      justify-content: space-around;
+      padding: 6px 0 env(safe-area-inset-bottom, 6px);
+      box-shadow: 0 -10px 40px rgba(0,0,0,0.5);
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      padding: 6px 16px;
+      text-decoration: none;
+      color: var(--text-muted);
+      transition: all 0.3s;
+      position: relative;
+      border: none;
+      background: none;
+      cursor: pointer;
+      font-family: 'Cairo', sans-serif;
+    }
+
+    .nav-item i {
+      font-size: 20px;
+      transition: all 0.3s;
+    }
+
+    .nav-item span {
+      font-size: 10px;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+
+    .nav-item.active,
+    .nav-item:hover {
+      color: var(--primary);
+    }
+
+    .nav-item.active::before {
+      content: '';
+      position: absolute;
+      top: -1px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 30px;
+      height: 3px;
+      background: var(--primary);
+      border-radius: 0 0 3px 3px;
+      box-shadow: 0 0 20px var(--shadow-red);
+    }
+
+    .nav-item.active i {
+      text-shadow: 0 0 20px var(--shadow-red);
+    }
+
+    .nav-center {
+      position: relative;
+      margin-top: -20px;
+    }
+
+    .nav-center-btn {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      border: 3px solid var(--bg-primary);
+      color: #fff;
+      font-size: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 25px var(--shadow-red);
+      transition: all 0.3s;
+    }
+
+    .nav-center-btn:hover {
+      transform: scale(1.1) rotate(90deg);
+    }
+
+    /* ===== LOADING SKELETON ===== */
+    .skeleton {
+      background: linear-gradient(90deg, var(--bg-card) 25%, var(--bg-card-hover) 50%, var(--bg-card) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s ease-in-out infinite;
+      border-radius: 8px;
+    }
+
+    @keyframes shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* ===== ANIME DETAIL MODAL ===== */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 300;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(10px);
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .modal-content {
+      background: var(--bg-secondary);
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+      width: 100%;
+      max-width: 500px;
+      max-height: 85vh;
+      overflow-y: auto;
+      animation: slideUp 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .modal-content::-webkit-scrollbar { width: 4px; }
+    .modal-content::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 2px; }
+
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+
+    .modal-header {
+      position: relative;
+      height: 220px;
+      overflow: hidden;
+    }
+
+    .modal-header img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .modal-header::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, var(--bg-secondary) 0%, transparent 50%);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      z-index: 2;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.6);
+      border: none;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(5px);
+    }
+
+    .modal-body {
+      padding: 20px;
+      margin-top: -30px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .modal-body h2 {
+      font-size: 22px;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+
+    .modal-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .modal-tags span {
+      padding: 3px 12px;
+      border-radius: 12px;
+      background: rgba(204,0,0,0.15);
+      color: var(--primary-light);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .modal-body p {
+      color: var(--text-secondary);
+      font-size: 14px;
+      line-height: 1.7;
+      margin-bottom: 18px;
+    }
+
+    .modal-body .btn {
+      width: 100%;
+      justify-content: center;
+      padding: 14px;
+      font-size: 16px;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (min-width: 600px) {
+      .hero { height: 500px; }
+      .hero-title { font-size: 40px; }
+      .anime-card { min-width: 170px; max-width: 170px; }
+      .anime-card.large { min-width: 220px; max-width: 220px; }
+    }
+
+    @media (min-width: 900px) {
+      body { padding-bottom: 0; }
+      .bottom-nav { display: none; }
+      .section { max-width: 1200px; margin-left: auto; margin-right: auto; }
+    }
+
+    /* ===== FLOATING PARTICLES ===== */
+    #particles-canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .main-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* rizz effect on images */
+    .anime-card-poster {
+      position: relative;
+    }
+    .anime-card-poster::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: var(--radius);
+      border: 1px solid transparent;
+      background: linear-gradient(135deg, rgba(204,0,0,0.2), transparent, rgba(204,0,0,0.1)) border-box;
+      -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+    .anime-card:hover .anime-card-poster::after {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="particles-canvas"></canvas>
+
+<div class="main-content">
+
+  <!-- ===== HEADER ===== -->
+  <header>
+    <a href="#" class="logo">
+      <div class="logo-icon">A</div>
+      <span class="logo-text">Anime<span>Verse</span></span>
+    </a>
+    <div class="search-box">
+      <i class="fas fa-search"></i>
+      <input type="text" placeholder="ابحث عن أنمي..." id="searchInput">
+    </div>
+    <div class="header-actions">
+      <button title="الإشعارات">
+        <i class="fas fa-bell"></i>
+        <span class="notif-dot"></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero" id="hero">
+    <div class="hero-slider" id="heroSlider">
+      <!-- injected by JS -->
+    </div>
+    <div class="hero-dots" id="heroDots"></div>
+  </section>
+
+  <!-- ===== CATEGORIES ===== -->
+  <section class="section">
+    <div class="section-header">
+      <h2 class="section-title"><span class="accent"></span> التصنيفات</h2>
+    </div>
+    <div class="categories-scroll" id="categoriesList">
+      <button class="category-chip active">الكل</button>
+      <button class="category-chip">أكشن</button>
+      <button class="category-chip">مغامرة</button>
+      <button class="category-chip">رومانسي</button>
+      <button class="category-chip">كوميدي</button>
+      <button class="category-chip">دراما</button>
+      <button class="category-chip">خيال علمي</button>
+      <button class="category-chip">رعب</button>
+      <button class="category-chip">شونين</button>
+      <button class="category-chip">سلايس أوف لايف</button>
+    </div>
+  </section>
+
+  <!-- ===== CONTINUE WATCHING ===== -->
+  <section class="section">
+    <div class="section-header">
+      <h2 class="section-title"><span class="accent"></span> متابعة المشاهدة</h2>
+      <a href="#" class="section-link">عرض الكل <i class="fas fa-arrow-left"></i></a>
+    </div>
+    <div class="scroll-wrapper">
+      <div class="scroll-area" id="continueArea"></div>
+    </div>
+  </section>
+
+  <!-- ===== POPULAR ===== -->
+  <section class="section">
+    <div class="section-header">
+      <h2 class="section-title"><span class="accent"></span> الأكثر مشاهدة</h2>
+      <a href="#" class="section-link">عرض الكل <i class="fas fa-arrow-left"></i></a>
+    </div>
+    <div class="scroll-wrapper">
+      <button class="scroll-arrow left" id="popularLeft"><i class="fas fa-chevron-right"></i></button>
+      <div class="scroll-area" id="popularArea"></div>
+      <button class="scroll-arrow right" id="popularRight"><i class="fas fa-chevron-left"></i></button>
+    </div>
+  </section>
+
+  <!-- ===== NEW RELEASES ===== -->
+  <section class="section">
+    <div class="section-header">
+      <h2 class="section-title"><span class="accent"></span> الإصدارات الجديدة</h2>
+      <a href="#" class="section-link">عرض الكل <i class="fas fa-arrow-left"></i></a>
+    </div>
+    <div class="scroll-wrapper">
+      <button class="scroll-arrow left" id="newLeft"><i class="fas fa-chevron-right"></i></button>
+      <div class="scroll-area" id="newArea"></div>
+      <button class="scroll-arrow right" id="newRight"><i class="fas fa-chevron-left"></i></button>
+    </div>
+  </section>
+
+  <!-- ===== TOP RATED ===== -->
+  <section class="section">
+    <div class="section-header">
+      <h2 class="section-title"><span class="accent"></span> الأعلى تقييماً</h2>
+      <a href="#" class="section-link">عرض الكل <i class="fas fa-arrow-left"></i></a>
+    </div>
+    <div class="scroll-area" id="topRatedArea"></div>
+  </section>
+
+</div>
+
+<!-- ===== BOTTOM NAV ===== -->
+<nav class="bottom-nav">
+  <button class="nav-item active" data-tab="home">
+    <i class="fas fa-home"></i>
+    <span>الرئيسية</span>
+  </button>
+  <button class="nav-item" data-tab="explore">
+    <i class="fas fa-compass"></i>
+    <span>استكشاف</span>
+  </button>
+  <div class="nav-center">
+    <button class="nav-center-btn" id="randomBtn">
+      <i class="fas fa-shuffle"></i>
+    </button>
+  </div>
+  <button class="nav-item" data-tab="favorites">
+    <i class="fas fa-heart"></i>
+    <span>المفضلة</span>
+  </button>
+  <button class="nav-item" data-tab="profile">
+    <i class="fas fa-user"></i>
+    <span>حسابي</span>
+  </button>
+</nav>
+
+<!-- ===== MODAL ===== -->
+<div class="modal-overlay" id="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <img src="" alt="" id="modalImg">
+      <button class="modal-close" id="modalClose"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="modal-body">
+      <h2 id="modalTitle"></h2>
+      <div class="modal-tags" id="modalTags"></div>
+      <p id="modalDesc"></p>
+      <button class="btn btn-primary"><i class="fas fa-play"></i> مشاهدة الآن</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ===== DATA =====
+  const animeData = [
+    { id: 1, title: 'ناروتو شيبودن', titleEn: 'Naruto Shippuden', rating: '9.2', year: '2024', type: 'TV', episodes: '24', genre: 'أكشن', img: 'https://picsum.photos/seed/naruto/400/560', bg: 'https://picsum.photos/seed/narutobg/1200/700', desc: 'مغامرات ناروتو أوزوماكي في سعيه ليصبح الهوكاجي الأقوى في قرية الورق.' },
+    { id: 2, title: 'ون بيس', titleEn: 'One Piece', rating: '9.5', year: '2024', type: 'TV', episodes: '12', genre: 'مغامرة', img: 'https://picsum.photos/seed/onepiece/400/560', bg: 'https://picsum.photos/seed/onepiecebg/1200/700', desc: 'قبعة القش الشهير مونكي دي لوفي يبحر بحثاً عن كنز ون بيس الأسطوري.' },
+    { id: 3, title: 'أتاك أون تايتن', titleEn: 'Attack on Titan', rating: '9.8', year: '2024', type: 'TV', episodes: '28', genre: 'أكشن', img: 'https://picsum.photos/seed/aot/400/560', bg: 'https://picsum.photos/seed/aotbg/1200/700', desc: 'معركة البشر ضد العمالقة في عالم محاصر بأسوار ضخمة.' },
+    { id: 4, title: 'ديمون سلاير', titleEn: 'Demon Slayer', rating: '9.6', year: '2024', type: 'TV', episodes: '26', genre: 'أكشن', img: 'https://picsum.photos/seed/demonslayer/400/560', bg: 'https://picsum.photos/seed/demonslayerbg/1200/700', desc: 'تانجيرو يسعى لإنقاذ أخته نيزوكو من لعنة الشياطين.' },
+    { id: 5, title: 'جوجوتسو كايسن', titleEn: 'Jujutsu Kaisen', rating: '9.4', year: '2024', type: 'TV', episodes: '23', genre: 'رعب', img: 'https://picsum.photos/seed/jjk/400/560', bg: 'https://picsum.photos/seed/jjkbg/1200/700', desc: 'يوجي إيتادوري يدخل عالم السحرة لمحاربة اللعنات القوية.' },
+    { id: 6, title: 'كيميتسو نو يايبا', titleEn: 'Kimetsu no Yaiba', rating: '9.3', year: '2024', type: 'TV', episodes: '26', genre: 'أكشن', img: 'https://picsum.photos/seed/kny/400/560', bg: 'https://picsum.photos/seed/knybg/1200/700', desc: 'قصة تانجيرو كامادو في رحلته لهزيمة الشياطين.' },
+    { id: 7, title: 'بليتش', titleEn: 'Bleach', rating: '8.9', year: '2024', type: 'TV', episodes: '20', genre: 'أكشن', img: 'https://picsum.photos/seed/bleach/400/560', bg: 'https://picsum.photos/seed/bleachbg/1200/700', desc: 'إيتشيجو كوروساكي يصبح شينيغامي ويواجه أرواحاً شريرة.' },
+    { id: 8, title: 'ديث نوت', titleEn: 'Death Note', rating: '9.7', year: '2024', type: 'TV', episodes: '37', genre: 'دراما', img: 'https://picsum.photos/seed/deathnote/400/560', bg: 'https://picsum.photos/seed/deathnotebg/1200/700', desc: 'طالب عبقري يجد مفكرة قاتلة ويقرر تطهير العالم من المجرمين.' },
+    { id: 9, title: 'هجوم العمالقة', titleEn: 'Attack on Titan S4', rating: '9.9', year: '2024', type: 'TV', episodes: '30', genre: 'أكشن', img: 'https://picsum.photos/seed/aot2/400/560', bg: 'https://picsum.photos/seed/aot2bg/1200/700', desc: 'الحسم النهائي في معركة البشر ضد العمالقة.' },
+    { id: 10, title: 'هنتر x هنتر', titleEn: 'Hunter x Hunter', rating: '9.1', year: '2024', type: 'TV', episodes: '148', genre: 'مغامرة', img: 'https://picsum.photos/seed/hunter/400/560', bg: 'https://picsum.photos/seed/hunterbg/1200/700', desc: 'غون فريكس يسعى ليصبح صياداً محترفاً.' },
+    { id: 11, title: 'فتى الجحيم', titleEn: 'Hellboy: The Animated', rating: '8.5', year: '2024', type: 'TV', episodes: '12', genre: 'رعب', img: 'https://picsum.photos/seed/hellboy/400/560', bg: 'https://picsum.photos/seed/hellboybg/1200/700', desc: 'مغامرات فتى الجحيم في عالم مليء بالكائنات الخارقة.' },
+    { id: 12, title: 'بنات القوة', titleEn: 'Powerpuff Girls Z', rating: '8.0', year: '2024', type: 'TV', episodes: '52', genre: 'كوميدي', img: 'https://picsum.photos/seed/powerpuff/400/560', bg: 'https://picsum.photos/seed/powerpuffbg/1200/700', desc: 'ثلاث فتيات خارقات يحمين مدينتهن من الأشرار.' },
+    { id: 13, title: 'سبونج بوب', titleEn: 'SpongeBob SquarePants', rating: '7.5', year: '2024', type: 'TV', episodes: '200', genre: 'كوميدي', img: 'https://picsum.photos/seed/spongebob/400/560', bg: 'https://picsum.photos/seed/spongebobbg/1200/700', desc: 'مغامرات سبونج بوب المضحكة في قاع المحيط الهادئ.' },
+    { id: 14, title: 'بن 10', titleEn: 'Ben 10', rating: '7.8', year: '2024', type: 'TV', episodes: '52', genre: 'خيال علمي', img: 'https://picsum.photos/seed/ben10/400/560', bg: 'https://picsum.photos/seed/ben10bg/1200/700', desc: 'فتى صغير يمتلك ساعة تمكنه من التحول إلى كائنات فضائية.' },
+    { id: 15, title: 'كوردج الجبان', titleEn: 'Courage the Cowardly Dog', rating: '8.2', year: '2024', type: 'TV', episodes: '52', genre: 'رعب', img: 'https://picsum.photos/seed/courage/400/560', bg: 'https://picsum.photos/seed/couragebg/1200/700', desc: 'كلب جبان يواجه كائنات مرعبة لحماية أصحابه.' },
+    { id: 16, title: 'توم وجيري', titleEn: 'Tom and Jerry', rating: '9.0', year: '2024', type: 'TV', episodes: '164', genre: 'كوميدي', img: 'https://picsum.photos/seed/tomjerry/400/560', bg: 'https://picsum.photos/seed/tomjerrybg/1200/700', desc: 'مطاردة كلاسيكية بين القط والفأر.' },
+  ];
+
+  const continueData = [
+    { id: 1, title: 'ناروتو شيبودن', episode: 'الحلقة 187', progress: 65, img: 'https://picsum.photos/seed/cont1/400/200' },
+    { id: 2, title: 'ون بيس', episode: 'الحلقة 1024', progress: 42, img: 'https://picsum.photos/seed/cont2/400/200' },
+    { id: 3, title: 'أتاك أون تايتن', episode: 'الحلقة 54', progress: 80, img: 'https://picsum.photos/seed/cont3/400/200' },
+    { id: 4, title: 'جوجوتسو كايسن', episode: 'الحلقة 18', progress: 25, img: 'https://picsum.photos/seed/cont4/400/200' },
+  ];
+
+  const heroData = animeData.slice(0, 4);
+
+  // ===== RENDER HERO =====
+  const heroSlider = document.getElementById('heroSlider');
+  const heroDots = document.getElementById('heroDots');
+  let heroIndex = 0;
+  let heroInterval;
+
+  function renderHero() {
+    heroSlider.innerHTML = heroData.map((a, i) => `
+      <div class="hero-slide ${i === 0 ? 'active' : ''}">
+        <img class="hero-bg" src="${a.bg}" alt="${a.title}" loading="${i === 0 ? 'eager' : 'lazy'}">
+        <div class="hero-content">
+          <span class="hero-badge"><i class="fas fa-play"></i> ${a.type}</span>
+          <h1 class="hero-title">${a.title}</h1>
+          <div class="hero-meta">
+            <span><i class="fas fa-star"></i> ${a.rating}</span>
+            <span><i class="fas fa-calendar"></i> ${a.year}</span>
+            <span><i class="fas fa-film"></i> ${a.genre}</span>
+          </div>
+          <p class="hero-desc">${a.desc}</p>
+          <div class="hero-btns">
+            <button class="btn btn-primary" onclick="openModal(${a.id})"><i class="fas fa-play"></i> مشاهدة</button>
+            <button class="btn btn-outline" onclick="openModal(${a.id})"><i class="fas fa-plus"></i> قائمتي</button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+
+    heroDots.innerHTML = heroData.map((_, i) => `
+      <button class="hero-dot ${i === 0 ? 'active' : ''}" data-index="${i}"></button>
+    `).join('');
+
+    document.querySelectorAll('.hero-dot').forEach(dot => {
+      dot.addEventListener('click', () => {
+        const idx = parseInt(dot.dataset.index);
+        goToHero(idx);
+      });
+    });
+
+    startHeroAuto();
+  }
+
+  function goToHero(idx) {
+    heroIndex = idx;
+    heroSlider.style.transform = `translateX(-${idx * 100}%)`;
+    document.querySelectorAll('.hero-dot').forEach((d, i) => {
+      d.classList.toggle('active', i === idx);
+    });
+    restartHeroAuto();
+  }
+
+  function startHeroAuto() {
+    heroInterval = setInterval(() => {
+      heroIndex = (heroIndex + 1) % heroData.length;
+      goToHero(heroIndex);
+    }, 5000);
+  }
+
+  function restartHeroAuto() {
+    clearInterval(heroInterval);
+    startHeroAuto();
+  }
+
+  // ===== RENDER CARDS =====
+  function renderCards(containerId, data, large = false) {
+    const container = document.getElementById(containerId);
+    container.innerHTML = data.map(a => `
+      <div class="anime-card ${large ? 'large' : ''}" onclick="openModal(${a.id})">
+        <div class="anime-card-poster">
+          <img src="${a.img}" alt="${a.title}" loading="lazy">
+          <span class="episode-badge">${a.episodes} حلقة</span>
+          <span class="rating"><i class="fas fa-star"></i> ${a.rating}</span>
+          <div class="overlay">
+            <span style="color:#fff;font-size:12px;font-weight:600;"><i class="fas fa-play-circle"></i> مشاهدة</span>
+          </div>
+        </div>
+        <div class="anime-card-title">${a.title}</div>
+        <div class="anime-card-sub"><span>${a.genre}</span> <span>•</span> <span>${a.year}</span></div>
+      </div>
+    `).join('');
+  }
+
+  function renderContinue() {
+    const container = document.getElementById('continueArea');
+    container.innerHTML = continueData.map(c => `
+      <div class="continue-card">
+        <img class="thumb" src="${c.img}" alt="${c.title}" loading="lazy">
+        <div class="body">
+          <div class="info">
+            <h4>${c.title}</h4>
+            <p>${c.episode}</p>
+            <div class="progress-bar">
+              <div class="fill" style="width: ${c.progress}%"></div>
+            </div>
+          </div>
+          <button class="play-btn"><i class="fas fa-play"></i></button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // ===== SCROLL ARROWS =====
+  function setupScroll(idLeft, idRight, areaId) {
+    const left = document.getElementById(idLeft);
+    const right = document.getElementById(idRight);
+    const area = document.getElementById(areaId);
+    if (!left || !right) return;
+    left.addEventListener('click', () => { area.scrollBy({ left: -340, behavior: 'smooth' }); });
+    right.addEventListener('click', () => { area.scrollBy({ left: 340, behavior: 'smooth' }); });
+  }
+
+  // ===== MODAL =====
+  function openModal(id) {
+    const a = animeData.find(item => item.id === id);
+    if (!a) return;
+    const modal = document.getElementById('modal');
+    document.getElementById('modalImg').src = a.bg;
+    document.getElementById('modalTitle').textContent = a.title;
+    document.getElementById('modalTags').innerHTML = `
+      <span>⭐ ${a.rating}</span>
+      <span>${a.genre}</span>
+      <span>${a.year}</span>
+      <span>${a.episodes} حلقة</span>
+    `;
+    document.getElementById('modalDesc').textContent = a.desc;
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  document.getElementById('modalClose').addEventListener('click', () => {
+    document.getElementById('modal').classList.remove('active');
+    document.body.style.overflow = '';
+  });
+
+  document.getElementById('modal').addEventListener('click', (e) => {
+    if (e.target === document.getElementById('modal')) {
+      document.getElementById('modal').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  });
+
+  // ===== RANDOM =====
+  document.getElementById('randomBtn').addEventListener('click', () => {
+    const r = animeData[Math.floor(Math.random() * animeData.length)];
+    openModal(r.id);
+  });
+
+  // ===== CATEGORIES =====
+  document.querySelectorAll('.category-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      document.querySelectorAll('.category-chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+    });
+  });
+
+  // ===== NAV ITEMS =====
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', () => {
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+      item.classList.add('active');
+    });
+  });
+
+  // ===== SEARCH =====
+  document.getElementById('searchInput').addEventListener('input', (e) => {
+    const q = e.target.value.trim().toLowerCase();
+    if (q.length === 0) return;
+    const results = animeData.filter(a => a.title.includes(q) || a.titleEn.toLowerCase().includes(q) || a.genre.includes(q));
+    if (results.length > 0) openModal(results[0].id);
+  });
+
+  // ===== PARTICLES =====
+  const canvas = document.getElementById('particles-canvas');
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = document.body.scrollHeight;
+  }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  class Particle {
+    constructor() {
+      this.reset();
+    }
+    reset() {
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height;
+      this.size = Math.random() * 2 + 0.5;
+      this.speedX = (Math.random() - 0.5) * 0.3;
+      this.speedY = (Math.random() - 0.5) * 0.3;
+      this.opacity = Math.random() * 0.5 + 0.1;
+    }
+    update() {
+      this.x += this.speedX;
+      this.y += this.speedY;
+      if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) this.reset();
+    }
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(204,0,0,${this.opacity})`;
+      ctx.fill();
+    }
+  }
+
+  for (let i = 0; i < 60; i++) particles.push(new Particle());
+
+  function animateParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => { p.update(); p.draw(); });
+
+    // draw lines
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 120) {
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = `rgba(204,0,0,${0.08 * (1 - dist / 120)})`;
+          ctx.lineWidth = 0.6;
+          ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(animateParticles);
+  }
+  animateParticles();
+
+  // ===== INIT =====
+  renderHero();
+  renderCards('popularArea', animeData.slice(5, 13));
+  renderCards('newArea', animeData.slice(0, 8), true);
+  renderCards('topRatedArea', [...animeData].sort((a, b) => parseFloat(b.rating) - parseFloat(a.rating)).slice(0, 6), true);
+  renderContinue();
+
+  setupScroll('popularLeft', 'popularRight', 'popularArea');
+  setupScroll('newLeft', 'newRight', 'newArea');
+</script>
+
+</body>
+</html>
